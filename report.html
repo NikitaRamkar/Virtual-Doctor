@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Report</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 40px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    h1, h2 {
+      color: #1977cc;
+    }
+
+    .section {
+      background-color: #fff;
+      padding: 20px 30px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #1977cc;
+      color: white;
+    }
+
+    .highlight {
+      color: #d62828;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧾 Patient Mental Health Report</h1>
+
+  <div class="section">
+    <h2>1. Depression Test (PHQ-9)</h2>
+    <p><strong>Date:</strong> {{ test_results[-1].date }}</p>
+    <p><strong>Latest Score Interpretation:</strong> <span class="highlight">{{ test_results[-1].result }}</span></p>
+    <p>This score is based on the PHQ-9 test and reflects the individual's depressive symptom severity.</p>
+  </div>
+
+  <div class="section">
+    <h2>2. Mood Log Analysis (21 Days)</h2>
+    <p><strong>Average Mood Score:</strong> {{ average_mood }} / 10</p>
+    <p><strong>Low Mood Days (<=4):</strong> {{ low_mood_days }} days</p>
+    <p><strong>High Mood Days (>=7):</strong> {{ high_mood_days }} days</p>
+    <p><strong>Consistency:</strong> {{ completed_days|length }} / 21 days logged</p>
+  </div>
+
+  <div class="section">
+    <h2>3. Sleep and Energy</h2>
+    <p><strong>Average Sleep Duration:</strong> {{ average_sleep }} hours</p>
+    <p><strong>Average Energy Score:</strong> {{ average_energy }} / 10</p>
+    <p><strong>Fatigue Flags:</strong> {{ fatigue_flags }} (days with energy <= 4)</p>
+  </div>
+
+  <div class="section">
+    <h2>4. Activity Engagement</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Activity</th>
+          <th>Engagement Days</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for activity, count in activity_counts.items() %}
+        <tr>
+          <td>{{ activity }}</td>
+          <td>{{ count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>5. Summary & Recommendations</h2>
+    <p>
+      Based on your PHQ-9 result and daily log trends, your overall mental health status suggests:
+      <span class="highlight">{{ test_results[-1].result }}</span> depression.
+    </p>
+    <ul>
+      <li>If experiencing fatigue or low mood consistently, consider consulting a mental health professional.</li>
+      <li>Maintain daily logs and focus on high-impact activities like exercise and mindfulness.</li>
+      <li>Improve sleep hygiene to stabilize mood and energy levels.</li>
+    </ul>
+  </div>
+</body>
+</html>

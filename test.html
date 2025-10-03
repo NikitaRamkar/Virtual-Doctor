@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PHQ-9 Depression Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f0f8ff; position: relative; }
+    h1 { color: #0077aa; }
+    form { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .question { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 10px; font-weight: bold; }
+    .options input { margin-right: 10px; }
+    .submit-btn { background-color: #0077aa; color: #fff; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+
+    #cameraContainer {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 220px;
+      border: 2px solid #0077aa;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    #cameraFeed {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>PHQ-9 Depression Self-Assessment</h1>
+
+  <!-- Camera container -->
+  <div id="cameraContainer">
+    <video id="cameraFeed" autoplay muted></video>
+  </div>
+
+  <form method="POST" action="/submit_test">
+    <div class="question">
+      <label>Q1: Little interest or pleasure in doing things</label>
+      <div class="options">
+        <input type="radio" name="q1" value="0" required> Not at all
+        <input type="radio" name="q1" value="1"> Several days
+        <input type="radio" name="q1" value="2"> More than half the days
+        <input type="radio" name="q1" value="3"> Nearly every day
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Q2: Feeling down, depressed, or hopeless</label>
+      <div class="options">
+        <input type="radio" name="q2" value="0" required> Not at all
+        <input type="radio" name="q2" value="1"> Several days
+        <input type="radio" name="q2" value="2"> More than half the days
+        <input type="radio" name="q2" value="3"> Nearly every day
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Q3: Trouble falling or staying asleep, or sleeping too much</label>
+      <div class="options">
+        <input type="radio" name="q3" value="0" required> Not at all
+        <input type="radio" name="q3" value="1"> Several days
+        <input type="radio" name="q3" value="2"> More than half the days
+        <input type="radio" name="q3" value="3"> Nearly every day
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Q4: Feeling tired or having little energy</label>
+      <div class="options">
+        <input type="radio" name="q4" value="0" required> Not at all
+        <input type="radio" name="q4" value="1"> Several days
+        <input type="radio" name="q4" value="2"> More than half the days
+        <input type="radio" name="q4" value="3"> Nearly every day
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Q5: Poor appetite or overeating</label>
+      <div class="options">
+        <input type="radio" name="q5" value="0" required> Not at all
+        <input type="radio" name="q5" value="1"> Several days
+        <input type="radio" name="q5" value="2"> More than half the days
+        <input type="radio" name="q5" value="3"> Nearly every day
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Q6: Feeling bad about yourself — or that you are a failure</label>
+      <div class="options">
+        <input type="radio" name="q6" value="0" required> Not at all
+        <input type="radio" name="q6" value="1"> Several days
+        <input type="radio" name="q6" value="2"> More than half the days
+        <input type="radio" name="q6" value="3"> Nearly every day
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Q7: Trouble concentrating on things</label>
+      <div class="options">
+        <input type="radio" name="q7" value="0" required> Not at all
+        <input type="radio" name="q7" value="1"> Several days
+        <input type="radio" name="q7" value="2"> More than half the days
+        <input type="radio" name="q7" value="3"> Nearly every day
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Q8: Moving or speaking so slowly or being fidgety/restless</label>
+      <div class="options">
+        <input type="radio" name="q8" value="0" required> Not at all
+        <input type="radio" name="q8" value="1"> Several days
+        <input type="radio" name="q8" value="2"> More than half the days
+        <input type="radio" name="q8" value="3"> Nearly every day
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Q9: Thoughts that you would be better off dead</label>
+      <div class="options">
+        <input type="radio" name="q9" value="0" required> Not at all
+        <input type="radio" name="q9" value="1"> Several days
+        <input type="radio" name="q9" value="2"> More than half the days
+        <input type="radio" name="q9" value="3"> Nearly every day
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">Submit</button>
+  </form>
+
+  <script>
+    // Request camera access
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(stream) {
+        const video = document.getElementById('cameraFeed');
+        video.srcObject = stream;
+      })
+      .catch(function(err) {
+        console.error("Camera access denied:", err);
+      });
+  </script>
+</body>
+</html>

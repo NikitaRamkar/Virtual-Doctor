@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Depression Test Result</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f8ff;
+      padding: 40px;
+      margin: 0;
+    }
+
+    h1 {
+      color: #0077aa;
+      text-align: center;
+    }
+
+    .result-box {
+      background: #e6f7ff;
+      padding: 25px 30px;
+      border-left: 6px solid #0077aa;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 20px auto;
+      font-size: 1.2em;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1em;
+      text-decoration: none;
+      color: #0077aa;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover {
+      color: #004466;
+    }
+
+    .section {
+      max-width: 1000px;
+      margin: 20px auto;
+      background: #ffffff;
+      padding: 20px;
+      border-left: 6px solid #0077aa;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      display: none;
+    }
+
+    .section h2 {
+      color: #0077aa;
+    }
+
+    .content-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .media-box {
+      flex: 1 1 45%;
+    }
+
+    .text-box {
+      flex: 1 1 50%;
+      font-size: 1.05em;
+      line-height: 1.6em;
+    }
+
+    .audio-player {
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .link {
+      color: #0077aa;
+      text-decoration: underline;
+    }
+
+    .button-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .view-btn {
+      background-color: #0077aa;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .view-btn:hover {
+      background-color: #005577;
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      background: #000;
+    }
+
+    .video-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Your Depression Level Result</h1>
+
+  <div class="result-box" id="resultText">Loading result...</div>
+
+  <div class="button-container">
+    <button class="view-btn" id="viewPrescriptionBtn" style="display:none" onclick="showPrescription()">View Prescription</button>
+  </div>
+
+  <div class="section" id="guideSection">
+    <h2>📘 Prescription Summary Guide</h2>
+    <div class="content-flex">
+      <div class="media-box">
+        <div class="video-container">
+          <video id="guideVideo" controls>
+            <source src="" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+      <div class="text-box">
+        <p>This guide explains your daily self-care prescription using Raag Bhairava music therapy, meditation, and emergency protocols. For best results, follow the instructions for <strong>at least 21 consecutive days</strong> as suggested in multiple psychological studies on habit formation and emotional healing.</p>
+        <p>The summary covers:
+          <ul>
+            <li>Scientific benefits of Raag Bhairava (backed by <a class="link" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6700702/" target="_blank">peer-reviewed research</a>).</li>
+            <li>Mindful breathing and meditation techniques.</li>
+            <li>Steps to manage mood and emotional swings.</li>
+          </ul>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="prescriptionSection">
+    <h2>🎵 Raag Bhairava Music Therapy</h2>
+    <div class="content-flex">
+      <div class="media-box">
+        <audio controls class="audio-player">
+          <source src="/assets/audio/raag-bhairava.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+      <div class="text-box">
+        <p><strong>Frequency:</strong> <span id="freq"></span></p>
+        <p>Raag Bhairava is a time-honored early morning raga known for its powerful calming and balancing effects. Based on clinical studies, it helps alleviate anxiety, promote clarity, and regulate emotional states. Daily 15-minute sessions for <strong>at least 21–30 days</strong> are recommended for sustained mental well-being. This practice aligns with music therapy protocols validated by <a class="link" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6700702/" target="_blank">research</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="meditationSection">
+    <h2>🧘 Meditation & Breathing Exercise</h2>
+    <div class="text-box">
+      <p>Scientific evidence suggests that regular meditation and breathwork can improve emotional resilience and cognitive focus. Use the 4-7-8 breathing technique or alternate-nostril breathing for 10–15 minutes daily. Combine this with music therapy for <strong>21 days or more</strong> for better neuropsychological outcomes. <a class="link" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6145966/" target="_blank">Read supporting study</a>.</p>
+    </div>
+  </div>
+
+  <div class="section" id="emergencySection">
+    <h2>🚨 Emergency Support</h2>
+    <p>If you’re feeling overwhelmed, please reach out immediately:</p>
+    <ul>
+      <li>📞 Maharashtra Mental Health Helpline: <a href="tel:18005990019" class="link">1800 599 0019</a></li>
+      <li>📞 National Emergency Number: <a href="tel:112" class="link">112</a></li>
+      <li>📞 Ambulance: <a href="tel:108" class="link">108</a></li>
+    </ul>
+    <button onclick="alert('Nearby doctors in Nashik feature coming soon.')">Find Nearby Doctors</button>
+  </div>
+
+  <a href="/test" class="back-link">← Take the test again</a>  <a href="/logs" class="back-link">← Fill daily logs</a>
+  <a href="/" class="back-link">← Home</a>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const level = params.get('level');
+    const error = params.get('error');
+    const resultDiv = document.getElementById('resultText');
+    const viewBtn = document.getElementById('viewPrescriptionBtn');
+
+    const prescriptionSection = document.getElementById('prescriptionSection');
+    const meditationSection = document.getElementById('meditationSection');
+    const guideSection = document.getElementById('guideSection');
+    const emergencySection = document.getElementById('emergencySection');
+    const freqSpan = document.getElementById('freq');
+    const guideVideo = document.getElementById('guideVideo');
+
+    const levelFreq = {
+      "Minimal": "528 Hz",
+      "Mild": "396 Hz",
+      "Moderate": "432 Hz",
+      "Moderately Severe": "417 Hz",
+      "Severe": "285 Hz"
+    };
+
+    const levelVideo = {
+      "Minimal": "/assets/videos/none mild.mp4",
+      "Mild": "/assets/videos/none mild.mp4",
+      "Moderate": "/assets/videos/moderate.mp4",
+      "Moderately Severe": "/assets/videos/mid.mp4",
+      "Severe": "/assets/videos/mid.mp4"
+    };
+
+    if (error) {
+      resultDiv.textContent = "Error occurred: " + error;
+    } else if (level) {
+      resultDiv.textContent = "Predicted Depression Level: " + level;
+      viewBtn.style.display = 'inline-block';
+      freqSpan.textContent = levelFreq[level] || "432 Hz";
+      guideVideo.src = levelVideo[level] || "/assets/videos/moderate.mp4";
+
+      if (level === "Moderately Severe" || level === "Severe") {
+        emergencySection.style.display = 'block';
+      }
+    } else {
+      resultDiv.textContent = "No result to display.";
+    }
+
+    function showPrescription() {
+      if (level !== "Severe") {
+        guideSection.style.display = 'block';
+        prescriptionSection.style.display = 'block';
+        meditationSection.style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>

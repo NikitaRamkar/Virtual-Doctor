@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Mood Log</title>
+  <style>
+    :root {
+      --primary: #1977cc;
+      --light-bg: #f0f8ff;
+      --white: #ffffff;
+      --gray-border: #e0e0e0;
+      --dark-text: #2c4964;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--light-bg);
+      margin: 0;
+      padding: 20px;
+      color: var(--dark-text);
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 30px;
+    }
+
+    form {
+      max-width: 800px;
+      margin: auto;
+      background: var(--white);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .question {
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .slider-wrapper input[type="range"] {
+      flex: 1;
+    }
+
+    .emoji {
+      font-size: 1.5em;
+    }
+
+    .scale-value {
+      width: 30px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .options {
+      margin-left: 15px;
+    }
+
+    .options label {
+      font-weight: normal;
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    .submit-btn {
+      background-color: var(--primary);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .submit-btn:hover {
+      background-color: #135fa3;
+    }
+
+    @media screen and (max-width: 600px) {
+      form {
+        padding: 20px;
+      }
+      .options label {
+        display: block;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+  <script>
+    function updateEmoji(id, value) {
+      let emojis;
+      if (id === 'sleep_duration') {
+        emojis = ["😴", "😪", "🥱", "😐", "🙂", "😀", "😄", "😃", "😁", "😆", "🤩"];
+      } else {
+        emojis = ["😞", "😕", "😐", "🙂", "😀"];
+      }
+      let scale = parseInt(value);
+      let max = parseInt(document.getElementById(id).max);
+      let emojiIndex = Math.floor((scale) / (max / emojis.length));
+      if (emojiIndex >= emojis.length) emojiIndex = emojis.length - 1;
+      document.getElementById(id + '_emoji').innerText = emojis[emojiIndex];
+      document.getElementById(id + '_value').innerText = value;
+    }
+  </script>
+</head>
+<body>
+  <h1>Daily Mood Log</h1>
+  <form method="POST" action="/submit_log">
+
+    <div class="question">
+      <label for="mood">Mood (1 = Very Low, 10 = Very Good):</label>
+      <div class="slider-wrapper">
+        <input type="range" name="mood" id="mood" min="1" max="10" value="5" oninput="updateEmoji('mood', this.value)" required />
+        <span class="scale-value" id="mood_value">5</span>
+        <span id="mood_emoji" class="emoji">😐</span>
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Sleep Duration (0 = No sleep, 10 = Very refreshed):</label>
+      <div class="slider-wrapper">
+        <input type="range" name="sleep_duration" id="sleep_duration" min="0" max="10" value="5" oninput="updateEmoji('sleep_duration', this.value)" required />
+        <span class="scale-value" id="sleep_duration_value">5</span>
+        <span id="sleep_duration_emoji" class="emoji">😐</span>
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Sleep Quality (1 = Poor, 5 = Excellent):</label>
+      <div class="slider-wrapper">
+        <input type="range" name="sleep_quality" id="sleep_quality" min="1" max="5" value="3" oninput="updateEmoji('sleep_quality', this.value)" required />
+        <span class="scale-value" id="sleep_quality_value">3</span>
+        <span id="sleep_quality_emoji" class="emoji">😐</span>
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Energy Level (1 = Exhausted, 10 = Energetic):</label>
+      <div class="slider-wrapper">
+        <input type="range" name="energy" id="energy" min="1" max="10" value="5" oninput="updateEmoji('energy', this.value)" required />
+        <span class="scale-value" id="energy_value">5</span>
+        <span id="energy_emoji" class="emoji">😐</span>
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Motivation (1 = None, 10 = Very High):</label>
+      <div class="slider-wrapper">
+        <input type="range" name="motivation" id="motivation" min="1" max="10" value="5" oninput="updateEmoji('motivation', this.value)" required />
+        <span class="scale-value" id="motivation_value">5</span>
+        <span id="motivation_emoji" class="emoji">😐</span>
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Activities Today:</label>
+      <div class="options">
+        <label><input type="checkbox" name="activities" value="Exercise"> Exercise</label>
+        <label><input type="checkbox" name="activities" value="Study"> Study</label>
+        <label><input type="checkbox" name="activities" value="Music"> Music</label>
+        <label><input type="checkbox" name="activities" value="Meditation"> Meditation</label>
+        <label><input type="checkbox" name="activities" value="Rest"> Rest</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Did you practice self-care today?</label>
+      <div class="options">
+        <label><input type="radio" name="self_care" value="Yes" required> Yes</label>
+        <label><input type="radio" name="self_care" value="No"> No</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Did you meditate or do breathing exercises?</label>
+      <div class="options">
+        <label><input type="radio" name="mindfulness" value="Yes" required> Yes</label>
+        <label><input type="radio" name="mindfulness" value="No"> No</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Did you interact with others today?</label>
+      <div class="options">
+        <label><input type="radio" name="social" value="Yes" required> Yes</label>
+        <label><input type="radio" name="social" value="No"> No</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <label>Rate your day (1 = Terrible, 5 = Great):</label>
+      <div class="slider-wrapper">
+        <input type="range" name="day_rating" id="day_rating" min="1" max="5" value="3" oninput="updateEmoji('day_rating', this.value)" required />
+        <span class="scale-value" id="day_rating_value">3</span>
+        <span id="day_rating_emoji" class="emoji">😐</span>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">Submit Log</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ full_name }}'s Profile</title>
+  <style>
+    :root {
+      --blue: #00b4d8;
+      --white: #ffffff;
+      --gray: #f5f5f5;
+      --black: #000000;
+
+      --nav-color: #2c4964;
+      --nav-hover-color: #1977cc;
+      --nav-mobile-background-color: #ffffff;
+      --nav-dropdown-background-color: #ffffff;
+      --nav-dropdown-color: #2c4964;
+      --nav-dropdown-hover-color: #1977cc;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--black);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--gray);
+    }
+
+    .header {
+      background-color: var(--nav-hover-color);
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .main {
+      display: flex;
+      flex: 1;
+    }
+
+    .sidebar {
+      width: 240px;
+      background-color: var(--nav-mobile-background-color);
+      border-right: 1px solid #ddd;
+      padding: 30px 20px;
+      box-shadow: 2px 0 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: var(--nav-color);
+      text-align: center;
+    }
+
+    .sidebar button {
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 15px;
+      margin-bottom: 15px;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s;
+    }
+
+    .sidebar button:hover {
+      background-color: #f0f0f0;
+      color: var(--nav-hover-color);
+    }
+
+    .sidebar .logout {
+      background-color: var(--nav-hover-color);
+      color: white;
+      border: none;
+      margin-top: auto;
+    }
+
+    .content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+      background-color: var(--white);
+    }
+
+    h1, h2, p, td, th {
+      color: var(--black);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin: 30px 0 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: var(--white);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    th, td {
+      padding: 14px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: var(--nav-hover-color);
+      color: white;
+    }
+
+    .button {
+      display: inline-block;
+      background-color: var(--blue);
+      color: white;
+      padding: 10px 18px;
+      text-decoration: none;
+      border-radius: 6px;
+      margin: 15px 0;
+      transition: background 0.3s;
+    }
+
+    .button:hover {
+      background-color: #0096c7;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .calendar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      max-width: 500px;
+      margin-top: 20px;
+    }
+
+    .day {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #fff;
+      border: 2px solid var(--blue);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .day.completed::after {
+      content: "\2713";
+      color: green;
+      position: absolute;
+      bottom: -6px;
+      right: -5px;
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .content {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div><strong>Profile</strong></div>
+    <div><a href="{{ url_for('home') }}"> Home</a></div>
+  </div>
+
+  <div class="main">
+    <div class="sidebar">
+      <h2>{{ full_name }}</h2>
+      <button onclick="showSection('testHistory')">Test History</button>
+      <button onclick="showSection('dailyLogs')">Daily Logs</button>
+      <a class="button logout" href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+    <div class="content">
+      <h1>Welcome, {{ full_name }}!</h1>
+
+      <div id="testHistory" class="hidden">
+        <h2>🧪 Test History</h2>
+        {% if test_results %}
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Depression Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for test in test_results %}
+            <tr>
+              <td>{{ test.date }}</td>
+              <td>{{ test.result }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+          <p>No test history found.</p>
+        {% endif %}
+      </div>
+
+      <div id="dailyLogs" class="hidden">
+        <h2>📘 Daily Mood Logs</h2>
+        <a class="button" href="{{ url_for('logs') }}">+ Add New Log</a>
+
+        <div class="calendar">
+          {% for day in range(1, 22) %}
+            <div class="day {% if day in completed_days %}completed{% endif %}" onclick="location.href='{{ url_for('logs') }}?day={{ day }}'">{{ day }}</div>
+          {% endfor %}
+        </div>
+
+        {% if logs %}
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Mood</th>
+              <th>Sleep Duration</th>
+              <th>Sleep Quality</th>
+              <th>Energy</th>
+              <th>Motivation</th>
+              <th>Self-Care</th>
+              <th>Mindfulness</th>
+              <th>Social</th>
+              <th>Day Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for log in logs %}
+            <tr>
+              <td>{{ log.date }}</td>
+              <td>{{ log.mood }}</td>
+              <td>{{ log.sleep_duration }}</td>
+              <td>{{ log.sleep_quality }}</td>
+              <td>{{ log.energy }}</td>
+              <td>{{ log.motivation }}</td>
+              <td>{{ log.activities.self_care }}</td>
+              <td>{{ log.activities.mindfulness }}</td>
+              <td>{{ log.activities.social }}</td>
+              <td>{{ log.day_rating }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+          <p>No mood logs found.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.getElementById('testHistory').classList.add('hidden');
+      document.getElementById('dailyLogs').classList.add('hidden');
+      document.getElementById(id).classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
